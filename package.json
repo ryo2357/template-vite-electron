@@ -1,0 +1,39 @@
+{
+  "name": "vite-electron-template",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "start": "npm-run-all makedir:dist filecopy:* background:build --parallel vite:dev --race electron:start",
+    "build": "run-s clean vite:build filecopy:preload background:build electron:build",
+    "build:mac": "run-s clean vite:build electron:macbuild",
+    "background:build": "rollup --config rollup.config.js",
+    "vite:dev": "vite",
+    "vite:build": "vite build",
+    "vite:serve": "vite preview",
+    "vite:prdbuild": "vite build --config vite.config.prd.js",
+    "electron:start": "set NODE_ENV=development && electron .",
+    "electron:build": "set NODE_ENV=production && electron-builder --win --x64 --dir",
+    "electron:macbuild": "set NODE_ENV=production && electron-builder --mac --dir",
+    "makedir:dist": "node -e \"require('fs').mkdirSync('./dist', { recursive: true })\"",
+    "filecopy:preload": "node -e \"require('fs').copyFileSync('./preload.js', './dist/preload.js')\"",
+    "clean": "rimraf dist"
+  },
+  "main": "dist/background.js", 
+  "build": {
+    "productName": "viteElectronTemplatApp", 
+    "files": [
+      "dist/**/*"
+    ]
+  },
+  "dependencies": {
+    "vue": "^3.2.25"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.0",
+    "electron": "^18.0.1",
+    "electron-builder": "^22.14.13",
+    "electron-devtools-installer": "^3.2.0",
+    "npm-run-all": "^4.1.5",
+    "vite": "^2.9.0"
+  }
+}
