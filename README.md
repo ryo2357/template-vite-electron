@@ -21,4 +21,8 @@ $ npm install
 $ npm start
 # electronアプリのビルド。引数の調整は必用
 $ npm build
+# 新しいリポジトリへの移行
+git remote add new-repo <新しいリポジトリのアドレス>
+git push new-repo main
+
 ```
